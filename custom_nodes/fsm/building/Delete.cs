@@ -17,12 +17,22 @@ public class Delete : State
     private bool _isContinuous;
 
 
-    public override void PhysicsProcess(double delta)
+    public override void Exit()
     {
-        if(Input.IsActionJustPressed(DeleteContinuousAction)) _isContinuous = true;
-        if(Input.IsActionJustReleased(DeleteContinuousAction)) _isContinuous = false;
+        _buildingUnderMouse = null;
+        ChangeBuildingModulate(DefaultColor);
+    }
 
-        if (Input.IsActionJustPressed(DeleteAction))
+    public override void Process(double delta)
+    {
+        ChangeBuildingModulate(DeleteColor);
+    }
+    public override void UnhandledInput(InputEvent @event)
+    {
+        if(@event.IsActionPressed(DeleteContinuousAction)) _isContinuous = true;
+        if(@event.IsActionReleased(DeleteContinuousAction)) _isContinuous = false;
+
+        if (@event.IsActionPressed(DeleteAction))
         {
             var building = GetBuildingUnderMouse();
             if(building != null)
@@ -31,20 +41,17 @@ public class Delete : State
                 _buildingUnderMouse = null;
                 if(!_isContinuous)
                 {
-                    TransitTo(new Idle());
+                    TransitTo(new Select());
                     return;
                 }
             }
         }
 
-        if (Input.IsActionJustPressed(CancelAction))
+        if (@event.IsActionPressed(CancelAction))
         {
-            ChangeBuildingModulate(DefaultColor);
-            TransitTo(new Idle());
+            TransitTo(new Select());
             return;
         }
-
-        ChangeBuildingModulate(DeleteColor);
     }
 
 
@@ -80,7 +87,7 @@ public class Delete : State
 
     private static BuildingInstance GetBuildingUnderMouse()
     {
-        Vector2I gridMousePosition = (Vector2I)(TileMapData.GetInstance().GetGlobalMousePosition() / GridVisualiser.GridSize);
+        Vector2I gridMousePosition = (Vector2I)(BuildManager.TileMapData.GetGlobalMousePosition() / GridVisualiser.GridSize);
         return BuildManager.GridData.GetBuildingOrDefault(gridMousePosition);
     }
 }

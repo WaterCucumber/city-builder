@@ -10,7 +10,8 @@ public partial class BuildManager : Node
 {
     private static BuildManager _instance;
     [Export] private Vector2I _gridSize;
-    [Export] private BuildingData[] buildings;
+    [Export] public TileMapLayer TileMapData { get; private set; }
+    [Export] private BuildingData building;
 
     public GridVisualiser GridVisualiser { get; private set; }
     public GridData GridData { get; private set; }
@@ -25,17 +26,15 @@ public partial class BuildManager : Node
         GridVisualiser = new(GridData);
 
         FiniteStateMachine = new();
-        FiniteStateMachine.TransitTo(new Idle());
+        FiniteStateMachine.TransitTo(new Select());
     }
 
-    public override void _Process(double delta)
+    public override void _Process(double delta) => FiniteStateMachine.Process(delta);
+    public override void _PhysicsProcess(double delta) => FiniteStateMachine.PhysicsProcess(delta);
+    public override void _UnhandledInput(InputEvent @event) => FiniteStateMachine.UnhandledInput(@event);
+    public override void _Input(InputEvent @event)
     {
-        FiniteStateMachine.Process(delta);
-    }
-
-    public override void _PhysicsProcess(double delta)
-    {
-        FiniteStateMachine.PhysicsProcess(delta);
+        FiniteStateMachine.Input(@event); Input(@event);
     }
 
     public static BuildManager GetInstance() => _instance;
@@ -47,11 +46,11 @@ public partial class BuildManager : Node
 
 
 
-    public override void _Input(InputEvent @event)
+    /* TEST */ void Input(InputEvent @event)
     {
         if (@event.IsActionPressed("_test_item0"))
         {
-            FiniteStateMachine.TransitTo(new Ghost(buildings[0]));
+            FiniteStateMachine.TransitTo(new Ghost(building));
         }
         else if (@event.IsActionPressed("_test_item1"))
         {

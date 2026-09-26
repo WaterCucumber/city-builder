@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ItemResource" format=3 uid="uid://ofnnj64f5a75"]
+
+[ext_resource type="Script" uid="uid://dwlivefndvttl" path="res://data/item_resource/ItemResource.cs" id="1_6sljm"]
+
+[resource]
+script = ExtResource("1_6sljm")
+Name = "Energy"
+metadata/_custom_type_script = "uid://dwlivefndvttl"

@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="City Builder"
+config/name="Building System"
+config/tags=PackedStringArray("system")
 run/main_scene="uid://blwwyq7avoild"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"

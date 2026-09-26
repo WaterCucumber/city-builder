@@ -22,4 +22,6 @@ public class FiniteStateMachine
 
     public void PhysicsProcess(double delta) => _currentState?.PhysicsProcess(delta);
     public void Process(double delta) => _currentState?.Process(delta);
+    public void UnhandledInput(InputEvent @event) => _currentState?.UnhandledInput(@event);
+    public void Input(InputEvent @event) => _currentState?.Input(@event);
 }

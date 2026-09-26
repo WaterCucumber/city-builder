@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 namespace CityBuilder.CustomNodes;
@@ -7,13 +8,23 @@ namespace CityBuilder.CustomNodes;
 public class GridData(Vector2I gridSize)
 {
     public event Action<Vector2I> GridPlaceChanged;
+    public event Action<Vector2I> GridPlaceRemoving;
 
     private BuildingInstance[,] _buildings = new BuildingInstance[gridSize.X, gridSize.Y];
+    private HashSet<BuildingInstance> _uniqueBuildings = [];
     
+
     public void PlaceBuilding(Rect2I buildingRect, BuildingInstance value)
     {
         var origin = buildingRect.Position;
         var size = buildingRect.Size;
+
+        if(value == null)
+        {
+            GridPlaceRemoving?.Invoke(origin);
+            _uniqueBuildings.Remove(GetBuildingAt(origin));
+        }
+        else _uniqueBuildings.Add(value);
 
         for (int x = 0; x < size.X; x++)
         {
@@ -22,6 +33,7 @@ public class GridData(Vector2I gridSize)
                 _buildings[origin.X + x, origin.Y + y] = value;
             }
         }
+
 
         NotifyNeighbors(origin, size);
         GridPlaceChanged?.Invoke(origin);

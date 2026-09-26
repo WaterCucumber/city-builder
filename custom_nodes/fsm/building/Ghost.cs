@@ -16,24 +16,36 @@ public class Ghost(BuildingData building) : State
     private static readonly Color ValidColor = new(0.4f,1,0.4f,0.7f);
     private static readonly Rid _canvasItem = CanvasManager.GetInstance().CreateCanvasItem(1);
 
-    private readonly TileMapData _tilemap = TileMapData.GetInstance();
+    private readonly TileMapLayer _tilemap = BuildManager.GetInstance().TileMapData;
+    private readonly BuildingData _building = building;
+
     private Vector2 _previousPos;
     private bool _isContinuous;
+    
 
-
-    public override void PhysicsProcess(double delta)
+    public override void Process(double delta)
     {
-        if(Input.IsActionJustPressed(ContinuousPlaceAction)) _isContinuous = true;
-        if(Input.IsActionJustReleased(ContinuousPlaceAction)) _isContinuous = false;
+        if(_building != null) DrawBuilding();
+        else if(_previousPos != Vector2.Inf)
+        {
+            _previousPos = Vector2.Inf;
+            RenderingServer.CanvasItemClear(_canvasItem);
+        }
+    }
 
-        if (Input.IsActionJustPressed(PlaceAction))
+    public override void UnhandledInput(InputEvent @event)
+    {
+        if(@event.IsActionPressed(ContinuousPlaceAction)) _isContinuous = true;
+        if(@event.IsActionReleased(ContinuousPlaceAction)) _isContinuous = false;
+
+        if (@event.IsActionPressed(PlaceAction))
         {
             if(CanBuild()) 
             {
                 PlaceBuilding();
                 if(!_isContinuous)
                 {
-                    TransitTo(new Idle());
+                    TransitTo(new Select());
                     return;
                 }
             }
@@ -41,18 +53,10 @@ public class Ghost(BuildingData building) : State
             //else InvalidPlacementPositionNotification();
         }
 
-        if (Input.IsActionJustPressed(CancelAction))
+        if (@event.IsActionPressed(CancelAction))
         {
-            TransitTo(new Idle());
+            TransitTo(new Select());
             return;
-        }
-
-
-        if(building != null) DrawBuilding();
-        else if(_previousPos != Vector2.Inf)
-        {
-            _previousPos = Vector2.Inf;
-            RenderingServer.CanvasItemClear(_canvasItem);
         }
     }
 
@@ -61,16 +65,16 @@ public class Ghost(BuildingData building) : State
     private void DrawBuilding()
     {
         Vector2 gridMousePosition = _tilemap.GetGlobalMousePosition() / GridVisualiser.GridSize;
-        Vector2 snappedPos = (gridMousePosition - (Vector2)building.Size * 0.5f).Floor() * GridVisualiser.GridSize;
+        Vector2 snappedPos = (gridMousePosition - (Vector2)_building.Size * 0.5f).Floor() * GridVisualiser.GridSize;
 
         if(_previousPos == snappedPos) return;
         _previousPos = snappedPos;
 
-        Rect2 rect = new(snappedPos, building.Size * (int)GridVisualiser.GridSize);
+        Rect2 rect = new(snappedPos, _building.Size * (int)GridVisualiser.GridSize);
         Color modulate = GetBuildingModulate();
         
         RenderingServer.CanvasItemClear(_canvasItem);
-        RenderingServer.CanvasItemAddTextureRect(_canvasItem, rect, building.Texture.GetRid(), modulate: modulate);
+        RenderingServer.CanvasItemAddTextureRect(_canvasItem, rect, _building.Texture.GetRid(), modulate: modulate);
     }
 
     private Color GetBuildingModulate() => CanBuild() ? ValidColor : InvalidColor;
@@ -78,10 +82,10 @@ public class Ghost(BuildingData building) : State
     private bool CanBuild()
     {
         Vector2 gridMousePosition = _tilemap.GetGlobalMousePosition() / GridVisualiser.GridSize;
-        Vector2 snappedPosition = (gridMousePosition - (Vector2)building.Size * 0.5f).Floor() * GridVisualiser.GridSize;
-        for (int x = 0; x < building.Size.X; x++)
+        Vector2 snappedPosition = (gridMousePosition - (Vector2)_building.Size * 0.5f).Floor() * GridVisualiser.GridSize;
+        for (int x = 0; x < _building.Size.X; x++)
         {
-            for (int y = 0; y < building.Size.Y; y++)
+            for (int y = 0; y < _building.Size.Y; y++)
             {
                 if(!IsPlaceValid(snappedPosition + new Vector2(x, y) * GridVisualiser.GridSize))
                 {
@@ -103,14 +107,14 @@ public class Ghost(BuildingData building) : State
         if(data == null) return false;
 
         int level = (int)data.GetCustomData(PlaceLevelTagName);
-        return building.PlaceLevels.Contains(level);
+        return _building.PlaceLevels.Contains(level);
     }
 
     private void PlaceBuilding()
     {
         Vector2 gridMousePosition = _tilemap.GetGlobalMousePosition() / GridVisualiser.GridSize;
-        Vector2I snappedPos = (Vector2I)(gridMousePosition - (Vector2)building.Size * 0.5f);
-        BuildingInstance instance = new(building, snappedPos);
+        Vector2I snappedPos = (Vector2I)(gridMousePosition - (Vector2)_building.Size * 0.5f);
+        BuildingInstance instance = new(_building, snappedPos);
         BuildManager.GetInstance().GridData.PlaceBuilding(instance.Rect, instance);
     }
 }
