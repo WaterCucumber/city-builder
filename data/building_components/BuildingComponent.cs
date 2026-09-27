@@ -4,6 +4,7 @@ using Godot;
 namespace CityBuilder.Data.BuildingComponents;
 
 
+[GlobalClass]
 public abstract partial class BuildingComponent : Resource
 {
     private Control _uiParent;

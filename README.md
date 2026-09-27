@@ -2,10 +2,11 @@
 (A project for personal experience)
 
 ## Current Work Flow
-2. Build UI
-	1. Place Mode
-	2. Delete Mode
-	3. Select Mode
+1. Improve UI
+	1. *see* **TODO** [Already-Done+11.1]
+	2. Add Global Inventory UI
+	3. Add Color Indications (red for 0 amount, yellow for full storages)
+2. Area Component (buffs & debuffs, requirements)
 3. Workers System    
 	1. Workers Data
 		1. Amount
@@ -15,6 +16,7 @@
 	3. Workers Consumer Component
 4. etc. ( WIP )
 ---
+
 
 ## Already Done
 1. Build Finite State Machine
@@ -48,4 +50,8 @@
 	2. Inventory Component UI
 	3. Default Building Component UI (for name display)
 10. Data Base for items and UI resource references
+11. Build UI
+	1. Building shop & Place Mode (**TODO**: Add tooltip for prices, names (& descriptions?))
+	2. Delete Mode
+	3. Idle & Select Mode
 ---

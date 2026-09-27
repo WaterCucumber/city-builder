@@ -11,7 +11,12 @@
 [ext_resource type="Script" uid="uid://w3ieyg77e8sf" path="res://scenes/game/BuildingInterface.cs" id="7_87uf6"]
 [ext_resource type="Texture2D" uid="uid://c40i747k52glx" path="res://assets/sprites/Sample-Tileset.png" id="7_bdhmt"]
 [ext_resource type="Script" uid="uid://bt4quxhojby5c" path="res://scenes/game/CloseButton.cs" id="8_2a8rs"]
-[ext_resource type="Script" uid="uid://c8n527t0begqq" path="res://data/building_components/ItemGenerator.cs" id="8_ftsea"]
+[ext_resource type="Script" uid="uid://cyybmbhhe06wi" path="res://scenes/game/BottomBar.cs" id="12_vaxfo"]
+[ext_resource type="PackedScene" uid="uid://cge7cjlytr284" path="res://scenes/ui/custom_texture_button/custom_texture_button.tscn" id="13_ftsea"]
+[ext_resource type="Script" uid="uid://csdse7xqitrlc" path="res://scenes/ui/custom_texture_button/BuildingToPlaceSelectButton.cs" id="14_3xj4h"]
+[ext_resource type="Script" uid="uid://c77xhht0gld55" path="res://scenes/ui/custom_texture_button/SelectModeToggleButton.cs" id="14_ftsea"]
+[ext_resource type="Resource" uid="uid://ofnnj64f5a75" path="res://data/item_resource/energy.tres" id="15_5v6r0"]
+[ext_resource type="Script" uid="uid://cs3g5sbjughey" path="res://scenes/ui/custom_texture_button/DeleteModeButton.cs" id="16_5v6r0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_87uf6"]
 texture = ExtResource("7_bdhmt")
@@ -62,11 +67,6 @@ StorageValue = 10
 Type = ExtResource("5_5jirj")
 metadata/_custom_type_script = "uid://bs43g7hrydflm"
 
-[sub_resource type="Resource" id="Resource_5jirj"]
-script = ExtResource("8_ftsea")
-_waitTime = 3.0
-metadata/_custom_type_script = "uid://c8n527t0begqq"
-
 [sub_resource type="Resource" id="Resource_5i0tg"]
 script = ExtResource("6_2a8rs")
 DisplayName = "Gd"
@@ -76,7 +76,28 @@ PlaceLevels = Array[int]([0, 2])
 Cost = Dictionary[ExtResource("4_5i0tg"), int]({
 ExtResource("5_5jirj"): 2
 })
-BaseComponents = [SubResource("Resource_kp23o"), SubResource("Resource_3xj4h"), SubResource("Resource_5jirj")]
+BaseComponents = [SubResource("Resource_kp23o"), SubResource("Resource_3xj4h")]
+metadata/_custom_type_script = "uid://c7a6qa1dfldqa"
+
+[sub_resource type="Resource" id="Resource_5v6r0"]
+script = ExtResource("4_2a8rs")
+
+[sub_resource type="Resource" id="Resource_10c2w"]
+script = ExtResource("6_vaxfo")
+StorageValue = 999
+Type = ExtResource("15_5v6r0")
+metadata/_custom_type_script = "uid://bs43g7hrydflm"
+
+[sub_resource type="Resource" id="Resource_uyinl"]
+script = ExtResource("6_2a8rs")
+DisplayName = "GD"
+Texture = ExtResource("7_4j704")
+Size = Vector2i(3, 3)
+PlaceLevels = Array[int]([1])
+Cost = Dictionary[ExtResource("4_5i0tg"), int]({
+ExtResource("5_5jirj"): 4
+})
+BaseComponents = [SubResource("Resource_5v6r0"), SubResource("Resource_10c2w")]
 metadata/_custom_type_script = "uid://c7a6qa1dfldqa"
 
 [node name="Game" type="Node2D" unique_id=542511719]
@@ -93,8 +114,6 @@ script = ExtResource("4_bdhmt")
 _gridSize = Vector2i(72, 40)
 TileMapData = NodePath("../MapData")
 building = SubResource("Resource_5i0tg")
-
-[node name="ObjectsContainer" type="Node" parent="." unique_id=647612391 groups=["objects_container"]]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=752157774]
 
@@ -141,3 +160,51 @@ vertical_scroll_mode = 5
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
+
+[node name="BottomBar" type="VBoxContainer" parent="UI" unique_id=445533307 node_paths=PackedStringArray("_toolbarToggler", "_mainToolbar")]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 2
+script = ExtResource("12_vaxfo")
+_subBarsHideY = 68.0
+_mainBarHideY = 32.0
+_tweenTime = 0.3
+_toolbarToggler = NodePath("HBoxContainer/ShowUI")
+_mainToolbar = NodePath("HBoxContainer/ToolbarUI")
+_subToolbars = {
+NodePath("HBoxContainer/ToolbarUI/Place"): NodePath("BuildShop")
+}
+
+[node name="BuildShop" type="HBoxContainer" parent="UI/BottomBar" unique_id=1512613288]
+visible = false
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 68)
+
+[node name="Test" parent="UI/BottomBar/BuildShop" unique_id=1203456022 instance=ExtResource("13_ftsea")]
+layout_mode = 2
+script = ExtResource("14_3xj4h")
+_data = SubResource("Resource_uyinl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/BottomBar" unique_id=1089046624]
+layout_mode = 2
+
+[node name="ShowUI" parent="UI/BottomBar/HBoxContainer" unique_id=1494196816 instance=ExtResource("13_ftsea")]
+layout_mode = 2
+script = ExtResource("14_ftsea")
+
+[node name="ToolbarUI" type="HBoxContainer" parent="UI/BottomBar/HBoxContainer" unique_id=1879693787]
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="Place" parent="UI/BottomBar/HBoxContainer/ToolbarUI" unique_id=1767919774 instance=ExtResource("13_ftsea")]
+layout_mode = 2
+
+[node name="Delete" parent="UI/BottomBar/HBoxContainer/ToolbarUI" unique_id=1820521263 instance=ExtResource("13_ftsea")]
+layout_mode = 2
+script = ExtResource("16_5v6r0")

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cge7cjlytr284"]
+
+[ext_resource type="Script" uid="uid://dyola2j4flyus" path="res://scenes/ui/custom_texture_button/CustomTextureButton.cs" id="1_7s6jc"]
+[ext_resource type="Texture2D" uid="uid://l6d1xd2ur384" path="res://icon.svg" id="1_kgpeq"]
+
+[node name="CustomTextureButton" type="PanelContainer" unique_id=1203456022 node_paths=PackedStringArray("Button", "_textureRect")]
+custom_minimum_size = Vector2(32, 32)
+script = ExtResource("1_7s6jc")
+Button = NodePath("TextureRect/Button")
+_textureRect = NodePath("TextureRect")
+Texture = ExtResource("1_kgpeq")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=269338858]
+clip_children = 2
+layout_mode = 2
+texture = ExtResource("1_kgpeq")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="TextureRect" unique_id=1572993667]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
