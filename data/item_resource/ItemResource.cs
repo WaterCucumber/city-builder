@@ -1,3 +1,4 @@
+using System.IO;
 using Godot;
 
 namespace CityBuilder.Data;
@@ -8,5 +9,5 @@ public partial class ItemResource : Resource
 {
     [Export] public string Name { get; private set; }
     [Export] public Texture2D Texture { get; private set; }
-    public string Id => ResourceName;
+    public string Id => Path.GetFileNameWithoutExtension(ResourcePath);
 }

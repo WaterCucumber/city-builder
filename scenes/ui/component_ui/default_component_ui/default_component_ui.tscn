@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://6amq83rfm1x0"]
+
+[ext_resource type="Script" uid="uid://bgos5vd4fmsk8" path="res://scenes/ui/component_ui/default_component_ui/DefaultComponentUI.cs" id="1_52m1b"]
+
+[node name="DefaultComponentUI" type="PanelContainer" unique_id=1896904309 node_paths=PackedStringArray("Title")]
+offset_right = 175.0
+offset_bottom = 43.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_52m1b")
+Title = NodePath("MarginContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1679208139]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=501411482]
+layout_mode = 2
+text = "My name is building"
+horizontal_alignment = 1
+vertical_alignment = 1

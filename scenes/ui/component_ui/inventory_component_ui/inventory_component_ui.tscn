@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cqyu2ldflxwls"]
+
+[ext_resource type="PackedScene" uid="uid://c3f5v67g31vus" path="res://scenes/ui/item_resource_ui/item_resource_ui.tscn" id="1_cxo6p"]
+[ext_resource type="Script" uid="uid://bbd1hqlmuf6s6" path="res://scenes/ui/component_ui/inventory_component_ui/InventoryComponentUI.cs" id="1_w80s1"]
+
+[node name="InventoryComponentUI" type="PanelContainer" unique_id=599953909 node_paths=PackedStringArray("Title", "ItemsContainer")]
+custom_minimum_size = Vector2(520, 147)
+offset_right = 520.0
+offset_bottom = 147.0
+size_flags_horizontal = 3
+script = ExtResource("1_w80s1")
+Title = NodePath("MarginContainer/VBoxContainer/Title")
+ItemsContainer = NodePath("MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1189578323]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=599630496]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=862527357]
+layout_mode = 2
+text = "Inventory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=239275407]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ItemsContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=1539597897]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
+[node name="ItemResourceUI" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=1674895431 instance=ExtResource("1_cxo6p")]
+layout_mode = 2
+
+[node name="ItemResourceUI2" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=619258670 instance=ExtResource("1_cxo6p")]
+layout_mode = 2
+
+[node name="ItemResourceUI3" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=1760742178 instance=ExtResource("1_cxo6p")]
+layout_mode = 2
+
+[node name="ItemResourceUI4" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=50946761 instance=ExtResource("1_cxo6p")]
+layout_mode = 2
+
+[node name="ItemResourceUI5" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=727263637 instance=ExtResource("1_cxo6p")]
+layout_mode = 2
+
+[node name="ItemResourceUI6" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=817734532 instance=ExtResource("1_cxo6p")]
+layout_mode = 2
+
+[node name="ItemResourceUI7" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=1036434268 instance=ExtResource("1_cxo6p")]
+layout_mode = 2
+
+[node name="ItemResourceUI8" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=1169846759 instance=ExtResource("1_cxo6p")]
+layout_mode = 2

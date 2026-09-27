@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bpqcd3dkbhnhg"]
+
+[ext_resource type="PackedScene" uid="uid://c3f5v67g31vus" path="res://scenes/ui/item_resource_ui/item_resource_ui.tscn" id="1_1k6k4"]
+[ext_resource type="Script" uid="uid://d1bsubqnw108g" path="res://scenes/ui/component_ui/global_storage_ui/GlobalStorageUI.cs" id="1_m0brh"]
+
+[node name="GlobalStorageUI" type="PanelContainer" unique_id=1020308855 node_paths=PackedStringArray("Title", "ItemsContainer")]
+offset_right = 240.0
+offset_bottom = 87.0
+script = ExtResource("1_m0brh")
+Title = NodePath("MarginContainer/VBoxContainer/Title")
+ItemsContainer = NodePath("MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=910606236]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1200071903]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=366511562]
+layout_mode = 2
+text = "Storage"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=85262264]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ItemsContainer" type="HFlowContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=1370303086]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ItemResourceUI" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=1674895431 instance=ExtResource("1_1k6k4")]
+layout_mode = 2
+
+[node name="ItemResourceUI2" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=464915537 instance=ExtResource("1_1k6k4")]
+layout_mode = 2
+
+[node name="ItemResourceUI3" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=580494560 instance=ExtResource("1_1k6k4")]
+layout_mode = 2
+
+[node name="ItemResourceUI4" parent="MarginContainer/VBoxContainer/ScrollContainer/ItemsContainer" unique_id=433987592 instance=ExtResource("1_1k6k4")]
+layout_mode = 2

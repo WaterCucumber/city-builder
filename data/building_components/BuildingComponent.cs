@@ -11,11 +11,11 @@ public abstract partial class BuildingComponent : Resource
 
     public void CreateUI(Control parent)
     {
-        _uiParent = new HFlowContainer
+        _uiParent = new PanelContainer
         {
             SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
-            SizeFlagsVertical = Control.SizeFlags.ExpandFill
         };
+        _uiParent.AddThemeStyleboxOverride("panel", new StyleBoxEmpty());
         parent.AddChild(_uiParent);
         ApplyUI(_uiParent);
     }

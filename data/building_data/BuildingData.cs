@@ -13,5 +13,5 @@ public partial class BuildingData : Resource
     [Export] public Vector2I Size { get; private set; }
     [Export] public Array<int> PlaceLevels { get; private set; } = [];
     [Export] public Dictionary<ItemResource, int> Cost { get; private set; } = [];
-    [Export] public BuildingComponent[] Components { get; set; } = [new DefaultBuildingComponent()];
+    [Export] public BuildingComponent[] BaseComponents { get; set; } = [new DefaultBuildingComponent()];
 }

@@ -29,6 +29,9 @@ public class Select : State
         var building = GetBuildingUnderMouse();
         if (@event.IsActionPressed(SelectAction))
         {
+            // FIXME: When we can't track that it was deselected, use this condition
+            if(_selectedBuilding != null && !_selectedBuilding.IsSelected) _selectedBuilding = null;
+
             // If building is null: We deselect previous and set null as previous
             // If building is NOT null: We deselect previous and set current as previous, then select it
             _selectedBuilding?.Deselect();

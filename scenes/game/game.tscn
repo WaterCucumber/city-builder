@@ -3,13 +3,15 @@
 [ext_resource type="Script" uid="uid://bbfo2ylvupd" path="res://data/building_components/DefaultBuildingComponent.cs" id="4_2a8rs"]
 [ext_resource type="Script" uid="uid://dwlivefndvttl" path="res://data/item_resource/ItemResource.cs" id="4_5i0tg"]
 [ext_resource type="Script" uid="uid://bg74l3jd52obx" path="res://custom_nodes/BuildManager.cs" id="4_bdhmt"]
+[ext_resource type="Resource" uid="uid://qa2l3mf6knyt" path="res://data/item_resource/wood.tres" id="5_5jirj"]
 [ext_resource type="Script" uid="uid://c7a6qa1dfldqa" path="res://data/building_data/BuildingData.cs" id="6_2a8rs"]
 [ext_resource type="Script" uid="uid://dvmm8t7o345em" path="res://custom_nodes/CanvasManager.cs" id="6_5i0tg"]
+[ext_resource type="Script" uid="uid://bs43g7hrydflm" path="res://data/building_components/GlobalStorage.cs" id="6_vaxfo"]
 [ext_resource type="Texture2D" uid="uid://l6d1xd2ur384" path="res://icon.svg" id="7_4j704"]
 [ext_resource type="Script" uid="uid://w3ieyg77e8sf" path="res://scenes/game/BuildingInterface.cs" id="7_87uf6"]
 [ext_resource type="Texture2D" uid="uid://c40i747k52glx" path="res://assets/sprites/Sample-Tileset.png" id="7_bdhmt"]
 [ext_resource type="Script" uid="uid://bt4quxhojby5c" path="res://scenes/game/CloseButton.cs" id="8_2a8rs"]
-[ext_resource type="Script" uid="uid://dyiqhvc0xddkt" path="res://custom_nodes/PlayerDataManager.cs" id="8_4j704"]
+[ext_resource type="Script" uid="uid://c8n527t0begqq" path="res://data/building_components/ItemGenerator.cs" id="8_ftsea"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_87uf6"]
 texture = ExtResource("7_bdhmt")
@@ -51,15 +53,30 @@ custom_data_layer_0/name = "place_level"
 custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_87uf6")
 
-[sub_resource type="Resource" id="Resource_4j704"]
+[sub_resource type="Resource" id="Resource_kp23o"]
 script = ExtResource("4_2a8rs")
+
+[sub_resource type="Resource" id="Resource_3xj4h"]
+script = ExtResource("6_vaxfo")
+StorageValue = 10
+Type = ExtResource("5_5jirj")
+metadata/_custom_type_script = "uid://bs43g7hrydflm"
+
+[sub_resource type="Resource" id="Resource_5jirj"]
+script = ExtResource("8_ftsea")
+_waitTime = 3.0
+metadata/_custom_type_script = "uid://c8n527t0begqq"
 
 [sub_resource type="Resource" id="Resource_5i0tg"]
 script = ExtResource("6_2a8rs")
 DisplayName = "Gd"
 Texture = ExtResource("7_4j704")
-Size = Vector2i(3, 3)
+Size = Vector2i(2, 2)
 PlaceLevels = Array[int]([0, 2])
+Cost = Dictionary[ExtResource("4_5i0tg"), int]({
+ExtResource("5_5jirj"): 2
+})
+BaseComponents = [SubResource("Resource_kp23o"), SubResource("Resource_3xj4h"), SubResource("Resource_5jirj")]
 metadata/_custom_type_script = "uid://c7a6qa1dfldqa"
 
 [node name="Game" type="Node2D" unique_id=542511719]
@@ -77,23 +94,24 @@ _gridSize = Vector2i(72, 40)
 TileMapData = NodePath("../MapData")
 building = SubResource("Resource_5i0tg")
 
-[node name="PlayerDataManager" type="Node" parent="." unique_id=1358203220]
-script = ExtResource("8_4j704")
+[node name="ObjectsContainer" type="Node" parent="." unique_id=647612391 groups=["objects_container"]]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=752157774]
 
 [node name="BuildingInterface" type="PanelContainer" parent="UI" unique_id=1421215133 node_paths=PackedStringArray("_dynamicInterface")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 30.0
-offset_top = 21.0
-offset_right = -30.0
-offset_bottom = -21.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.5
+offset_top = -25.0
+offset_right = 15.5
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_87uf6")
-_dynamicInterface = NodePath("VBoxContainer/MarginContainer/DynamicInterface")
+_dynamicInterface = NodePath("VBoxContainer/MarginContainer/ScrollContainer/DynamicInterface")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/BuildingInterface" unique_id=1086087047]
 layout_mode = 2
@@ -113,6 +131,13 @@ theme_override_constants/margin_left = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="DynamicInterface" type="HFlowContainer" parent="UI/BuildingInterface/VBoxContainer/MarginContainer" unique_id=22371124]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/BuildingInterface/VBoxContainer/MarginContainer" unique_id=1969178658]
+custom_maximum_size = Vector2(1092, 588)
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 5
+
+[node name="DynamicInterface" type="VBoxContainer" parent="UI/BuildingInterface/VBoxContainer/MarginContainer/ScrollContainer" unique_id=1376061421]
 layout_mode = 2
 size_flags_vertical = 3
+alignment = 1

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c3f5v67g31vus"]
+
+[ext_resource type="Texture2D" uid="uid://jac8rgndn4od" path="res://assets/sprites/Arrow-Circle-16.png" id="1_gg026"]
+[ext_resource type="Script" uid="uid://brnnq1eqvihhm" path="res://scenes/ui/item_resource_ui/ItemResourceUI.cs" id="1_rqhok"]
+
+[node name="ItemResourceUI" type="PanelContainer" unique_id=1674895431 node_paths=PackedStringArray("TextureRect", "Title")]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource("1_rqhok")
+TextureRect = NodePath("MarginContainer/HBoxContainer/TextureRect")
+Title = NodePath("MarginContainer/HBoxContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1650455472]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=79393217]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=82688891]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("1_gg026")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1208599513]
+layout_mode = 2
+text = "ItemResource x13 / 20"

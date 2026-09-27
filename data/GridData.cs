@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Godot;
 
 namespace CityBuilder.CustomNodes;
@@ -8,10 +7,10 @@ namespace CityBuilder.CustomNodes;
 public class GridData(Vector2I gridSize)
 {
     public event Action<Vector2I> GridPlaceChanged;
+    public event Action<Vector2I> GridPlaceAdded;
     public event Action<Vector2I> GridPlaceRemoving;
 
     private BuildingInstance[,] _buildings = new BuildingInstance[gridSize.X, gridSize.Y];
-    private HashSet<BuildingInstance> _uniqueBuildings = [];
     
 
     public void PlaceBuilding(Rect2I buildingRect, BuildingInstance value)
@@ -22,9 +21,8 @@ public class GridData(Vector2I gridSize)
         if(value == null)
         {
             GridPlaceRemoving?.Invoke(origin);
-            _uniqueBuildings.Remove(GetBuildingAt(origin));
+            GetBuildingAt(origin).Delete();
         }
-        else _uniqueBuildings.Add(value);
 
         for (int x = 0; x < size.X; x++)
         {
@@ -37,6 +35,7 @@ public class GridData(Vector2I gridSize)
 
         NotifyNeighbors(origin, size);
         GridPlaceChanged?.Invoke(origin);
+        if(value != null) GridPlaceAdded?.Invoke(origin);
     }
 
     public bool IsInsideGrid(Vector2I position) => position.X >= 0 && position.X < _buildings.GetLength(0) && position.Y >= 0 && position.Y < _buildings.GetLength(1);
@@ -56,6 +55,8 @@ public class GridData(Vector2I gridSize)
             {
                 // NOT Outline check
                 if(x != -1 && x != size.X && y != -1 && y != size.Y) continue;
+                // NOT Corners
+                if(x == -1 && y == -1 || x == size.X && y == -1 || x == -1 && y == size.Y || x == size.X && y == size.Y) continue;
 
                 Vector2I partPosition = new(origin.X + x, origin.Y + y);
 

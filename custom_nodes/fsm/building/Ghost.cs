@@ -12,8 +12,9 @@ public class Ghost(BuildingData building) : State
     private const string ContinuousPlaceAction = "place_continuous";
     private const string PlaceLevelTagName = "place_level";
 
-    private static readonly Color InvalidColor = new(1, 0.4f, 0.4f, 0.7f);
-    private static readonly Color ValidColor = new(0.4f,1,0.4f,0.7f);
+    private static readonly Color InvalidColor = new(1f, 0.4f, 0.4f, 0.7f);
+    private static readonly Color ValidColor = new(0.4f,1f,0.4f,0.7f);
+    private static readonly Color NotEnoughMaterialsColor = new(1.0f,0.6f,0f,0.7f);
     private static readonly Rid _canvasItem = CanvasManager.GetInstance().CreateCanvasItem(1);
 
     private readonly TileMapLayer _tilemap = BuildManager.GetInstance().TileMapData;
@@ -43,6 +44,7 @@ public class Ghost(BuildingData building) : State
             if(CanBuild()) 
             {
                 PlaceBuilding();
+                _previousPos = Vector2.Inf;
                 if(!_isContinuous)
                 {
                     TransitTo(new Select());
@@ -77,9 +79,11 @@ public class Ghost(BuildingData building) : State
         RenderingServer.CanvasItemAddTextureRect(_canvasItem, rect, _building.Texture.GetRid(), modulate: modulate);
     }
 
-    private Color GetBuildingModulate() => CanBuild() ? ValidColor : InvalidColor;
+    private Color GetBuildingModulate() => IsBuildingPlaceValid() ? (HasEnoughMaterials() ? ValidColor : NotEnoughMaterialsColor) : InvalidColor;
+    private bool CanBuild() => IsBuildingPlaceValid() && HasEnoughMaterials();
+    private bool HasEnoughMaterials() => PlayerInventory.GetInstance().Inventory.HasEnough(_building.Cost);
 
-    private bool CanBuild()
+    private bool IsBuildingPlaceValid()
     {
         Vector2 gridMousePosition = _tilemap.GetGlobalMousePosition() / GridVisualiser.GridSize;
         Vector2 snappedPosition = (gridMousePosition - (Vector2)_building.Size * 0.5f).Floor() * GridVisualiser.GridSize;
@@ -112,6 +116,8 @@ public class Ghost(BuildingData building) : State
 
     private void PlaceBuilding()
     {
+        PlayerInventory.GetInstance().Inventory.RemoveItems(_building.Cost);
+
         Vector2 gridMousePosition = _tilemap.GetGlobalMousePosition() / GridVisualiser.GridSize;
         Vector2I snappedPos = (Vector2I)(gridMousePosition - (Vector2)_building.Size * 0.5f);
         BuildingInstance instance = new(_building, snappedPos);
