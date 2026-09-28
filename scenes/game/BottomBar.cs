@@ -26,8 +26,9 @@ public partial class BottomBar : VBoxContainer
             var button = GetNode<CustomTextureButton>(keyValuePair.Key);
             var bar = GetNode<Control>(keyValuePair.Value);
             button.Button.Pressed += () => ToggleBar(bar, _subBarsHideY, _tweenTime);
+            if(bar.Visible) bar.Hide();
         }
-        if(_mainToolbar.Visible) ToggleAll();
+        if(_mainToolbar.Visible) _mainToolbar.Hide();
     }
 
     private async void ToggleAll()
@@ -45,8 +46,9 @@ public partial class BottomBar : VBoxContainer
 
     private async Task HideBar(Control obj, float hideY, float tweenTime)
     {
-        if(obj == null || !obj.Visible) return;
+        if(obj == null) return;
         if(obj == _shownSubBar) _shownSubBar = null;
+        obj.OffsetTransformPosition = new(0, 0);
 
         _tween?.Kill();
         _tween = CreateTween().SetTrans(Tween.TransitionType.Circ).SetEase(Tween.EaseType.In);
@@ -57,12 +59,13 @@ public partial class BottomBar : VBoxContainer
 
     private async Task ShowBar(Control obj, float hideY, float tweenTime)
     {
-        if(obj == null || obj.Visible) return;
+        if(obj == null) return;
         if(obj != _mainToolbar) 
         {
             await HideBar(_shownSubBar, hideY, tweenTime);
             _shownSubBar = obj;
         }
+        obj.OffsetTransformPosition = new(0, hideY);
 
         obj.Show();
         _tween?.Kill();

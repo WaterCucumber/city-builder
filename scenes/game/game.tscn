@@ -190,6 +190,7 @@ offset_transform_position = Vector2(0, 68)
 layout_mode = 2
 script = ExtResource("14_3xj4h")
 _data = SubResource("Resource_uyinl")
+Description = Array[String](["[b]GD[/b]: +999 Energy Storage"])
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/BottomBar" unique_id=1089046624]
 layout_mode = 2
@@ -197,6 +198,7 @@ layout_mode = 2
 [node name="ShowUI" parent="UI/BottomBar/HBoxContainer" unique_id=1494196816 instance=ExtResource("13_ftsea")]
 layout_mode = 2
 script = ExtResource("14_ftsea")
+Description = Array[String](["Toggle Select Mode"])
 
 [node name="ToolbarUI" type="HBoxContainer" parent="UI/BottomBar/HBoxContainer" unique_id=1879693787]
 layout_mode = 2
@@ -204,7 +206,9 @@ offset_transform_enabled = true
 
 [node name="Place" parent="UI/BottomBar/HBoxContainer/ToolbarUI" unique_id=1767919774 instance=ExtResource("13_ftsea")]
 layout_mode = 2
+Description = Array[String](["Toggle Buildings Menu"])
 
 [node name="Delete" parent="UI/BottomBar/HBoxContainer/ToolbarUI" unique_id=1820521263 instance=ExtResource("13_ftsea")]
 layout_mode = 2
 script = ExtResource("16_5v6r0")
+Description = Array[String](["Delete Mode"])

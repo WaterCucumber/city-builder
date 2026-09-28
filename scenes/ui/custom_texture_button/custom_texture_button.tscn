@@ -2,12 +2,19 @@
 
 [ext_resource type="Script" uid="uid://dyola2j4flyus" path="res://scenes/ui/custom_texture_button/CustomTextureButton.cs" id="1_7s6jc"]
 [ext_resource type="Texture2D" uid="uid://l6d1xd2ur384" path="res://icon.svg" id="1_kgpeq"]
+[ext_resource type="Script" uid="uid://dkc2vgn0arwu3" path="res://scenes/ui/tooltip_interact/TooltipInteract.cs" id="3_1478p"]
+[ext_resource type="PackedScene" uid="uid://dtq4ac6uf6ghv" path="res://scenes/ui/tooltip/tooltip.tscn" id="4_00b6e"]
 
-[node name="CustomTextureButton" type="PanelContainer" unique_id=1203456022 node_paths=PackedStringArray("Button", "_textureRect")]
+[node name="CustomTextureButton" type="PanelContainer" unique_id=1203456022 node_paths=PackedStringArray("Button", "_textureRect", "_tooltipInteract")]
 custom_minimum_size = Vector2(32, 32)
+offset_left = 213.0
+offset_top = 128.0
+offset_right = 245.0
+offset_bottom = 160.0
 script = ExtResource("1_7s6jc")
 Button = NodePath("TextureRect/Button")
 _textureRect = NodePath("TextureRect")
+_tooltipInteract = NodePath("TextureRect/Button/TooltipInteract")
 Texture = ExtResource("1_kgpeq")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=269338858]
@@ -24,3 +31,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TooltipInteract" type="Control" parent="TextureRect/Button" unique_id=1647370942 node_paths=PackedStringArray("_tooltip")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("3_1478p")
+DisplayText = Array[String](["Bebra", "De"])
+_tooltip = NodePath("Tooltip")
+
+[node name="Tooltip" parent="TextureRect/Button/TooltipInteract" unique_id=1453681937 instance=ExtResource("4_00b6e")]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 6.0
+offset_right = 540.0
+offset_bottom = 300.0
+_tooltipOffset = Vector2(8, 0)

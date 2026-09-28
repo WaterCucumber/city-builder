@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dtq4ac6uf6ghv"]
+
+[ext_resource type="Script" uid="uid://dnvfyam5wel6e" path="res://scenes/ui/tooltip/Tooltip.cs" id="1_60kgd"]
+[ext_resource type="PackedScene" uid="uid://cxwl23l4ouon5" path="res://scenes/ui/tooltip_text/tooltip_text.tscn" id="2_327l5"]
+
+[node name="Tooltip" type="VBoxContainer" unique_id=1453681937]
+top_level = true
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("1_60kgd")
+_tooltipText = ExtResource("2_327l5")

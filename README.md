@@ -1,19 +1,40 @@
 # City Builder Project
 (A project for personal experience)
 
+
+## Setting
+- You are a machine that need to build a *factory* and *World Regulator* building on a dangerous planet.
+---
+
+
+## Design
+- Difficulty is "*Asteroid rain*" that appears on the planet every *2-3 minute*.
+If asteroids destroy "*Machine Center*", you lose.
+- Resources set: Steel, Biomass, Golden Ore, Golden Ingot, *Radioactive Cell*
+- Build "*Protective Umbrella*" and place *Radioactive Cell* in to activate it
+- "*Protective Umbrella*" also provides energy for your buildings, but the more buildings plugged in the less Umbrella's protection.
+- *Radioactive Cell* can be set into buildings to improve their efficiency
+---
+
+
 ## Current Work Flow
+1. Create Health Component and Max Health to Data
+2. Damage System
+	1. Buildings Take Damage 
+	2. Some Buildings Can't take damage
+	3. Some Protect (flat value) from damage
+4. Protective Umbrella
+	1. Damage Protection
+	1. Visual
+2. Asteroids
+	1. Asteroids Timer
+	2. Asteroids Visual
+	3. Asteroids UI (timer)
+3. Radioactive Cell Place Component
 1. Improve UI
-	1. *see* **TODO** [Already-Done+11.1]
-	2. Add Global Inventory UI
-	3. Add Color Indications (red for 0 amount, yellow for full storages)
+	1. Add Global Inventory UI
+	2. Add Color Indications (red for 0 amount, yellow for full storages)
 2. Area Component (buffs & debuffs, requirements)
-3. Workers System    
-	1. Workers Data
-		1. Amount
-		2. Efficiency
-		3. Quality
-	2. Workers Container Component
-	3. Workers Consumer Component
 4. etc. ( WIP )
 ---
 
@@ -51,7 +72,7 @@
 	3. Default Building Component UI (for name display)
 10. Data Base for items and UI resource references
 11. Build UI
-	1. Building shop & Place Mode (**TODO**: Add tooltip for prices, names (& descriptions?))
+	1. Building shop & Place Mode (**TODO**: Add tooltip for prices)
 	2. Delete Mode
 	3. Idle & Select Mode
 ---
